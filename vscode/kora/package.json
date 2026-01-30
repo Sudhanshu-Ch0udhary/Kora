@@ -1,0 +1,36 @@
+{
+  "name": "kora",
+  "displayName": "Kora Language",
+  "description": "Syntax highlighting and snippets for the Kora programming language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.108.1"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "kora",
+      "aliases": ["Kora", "kora"],
+      "extensions": [".kora"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "kora",
+      "scopeName": "source.kora",
+      "path": "./syntaxes/kora.tmLanguage.json"
+    }],
+    "snippets": [{
+      "language": "kora",
+      "path": "./snippets/kora.json"
+    }],
+    "iconThemes": [
+      {
+         "id": "kora-icons",
+         "label": "Kora Icon",
+         "path": "./icons/kora-icon-theme.json"
+       }
+    ]
+  }
+}

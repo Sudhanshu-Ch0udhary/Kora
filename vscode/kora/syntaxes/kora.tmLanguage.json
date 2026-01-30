@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Kora",
+  "scopeName": "source.kora",
+  "patterns": [
+  	{ "include": "#keywords" },
+  	{ "include": "#types" },
+  	{ "include": "#booleans" },
+  	{ "include": "#strings" },
+  	{ "include": "#numbers" },
+  	{ "include": "#operators" }
+	],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.kora",
+          "match": "\\b(if|else|while|func|return|stop)\\b"
+        }
+      ]
+    },
+
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.kora",
+          "match": "\\b(int|float|string|bool)\\b"
+        }
+      ]
+    },
+
+    "strings": {
+      "name": "string.quoted.double.kora",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.kora",
+          "match": "\\\\."
+        }
+      ]
+    },
+
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.kora",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        }
+      ]
+    },
+
+		"booleans": {
+  		"patterns": [
+    		{
+      		"name": "constant.language.boolean.kora",
+      		"match": "\\b(true|false|null)\\b"
+    		}
+  		]
+		},
+
+		"operators": {
+  		"patterns": [
+    		{
+      		"name": "keyword.operator.kora",
+      		"match": "(\\+|-|\\*|/|==|!=|<=|>=|<|>|=|and|or)"
+    		}
+  		]
+		}
+  }
+}

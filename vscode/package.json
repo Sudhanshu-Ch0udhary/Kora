@@ -1,0 +1,11 @@
+{
+  "name": "vscode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sudhanshu Choudhary",
+  "license": "ISC",
+  "devDependencies": {
+    "generator-code": "^1.11.16",
+    "yo": "^6.0.0"
+  }
+}

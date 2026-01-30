@@ -1,0 +1,11 @@
+{
+  "iconDefinitions": {
+    "kora-file": {
+      "iconPath": "./kora.png"
+    }
+  },
+
+  "fileExtensions": {
+    "kora": "kora-file"
+  }
+}

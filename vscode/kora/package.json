@@ -3,6 +3,7 @@
   "displayName": "Kora Language",
   "description": "Syntax highlighting and snippets for the Kora programming language",
   "version": "0.0.1",
+  "publisher": "Sudhanshu-Ch0udhary",
   "engines": {
     "vscode": "^1.108.1"
   },

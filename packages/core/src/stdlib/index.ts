@@ -60,3 +60,5 @@ export function createStdlib():Record<string, NativeFunctionValue> {
     }
   }
 }
+
+export const stdlib = createStdlib();

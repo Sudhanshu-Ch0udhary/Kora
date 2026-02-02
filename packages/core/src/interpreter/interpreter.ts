@@ -3,14 +3,13 @@ import { Environment } from "./environment.js";
 import { execute } from "./statements.js";
 import { ReturnSignal, StopSignal } from "./control.js";
 import { RuntimeValue, NULL } from "./values.js";
-import { createStdlib } from "../stdlib/index.js";
+import { stdlib } from "../stdlib/index.js";
 
 export class Interpreter {
   private globalEnv: Environment;
 
   constructor() {
     this.globalEnv = new Environment();
-    const stdlib = createStdlib();
     for (const name in stdlib) {
       this.globalEnv.define(name, stdlib[name]);
     }

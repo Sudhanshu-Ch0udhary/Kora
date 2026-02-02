@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lexer, Parser, Interpreter } from "@sudhanshu_choudhary/kora-core";
+import { Lexer, Parser, Interpreter, stdlib } from "@sudhanshu_choudhary/kora-core";
 import { ChevronLeft } from "lucide-react";
 import Header from "./components/Header";
 import CodeEditor from "./components/CodeEditor";
@@ -21,14 +21,13 @@ print(add(x, y))`);
   const [isError, setIsError] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [isOutputCollapsed, setIsOutputCollapsed] = useState(false);
-  const [outputWidth, setOutputWidth] = useState(40); // percentage
+  const [outputWidth, setOutputWidth] = useState(40);
 
   const handleResize = (deltaX: number) => {
     const containerWidth = window.innerWidth;
     const deltaPercent = (deltaX / containerWidth) * 100;
     setOutputWidth(prev => {
       const newWidth = prev - deltaPercent;
-      // Clamp between 20% and 60%
       return Math.max(20, Math.min(60, newWidth));
     });
   };
@@ -42,13 +41,21 @@ print(add(x, y))`);
     setOutput("");
     setIsError(false);
     
-    // Expand output panel when running code
     if (isOutputCollapsed) {
       setIsOutputCollapsed(false);
     }
 
-    // Simulate async execution with a slight delay for loading animation
     await new Promise(resolve => setTimeout(resolve, 800));
+
+    let buffer = "";
+    stdlib.print = {
+      type: "native-function",
+      name: "print",
+      call(args: any[]) {
+        buffer += args.map(a => a.value ?? a).join(" ") + "\n";
+        return { type: "null" };
+      }
+    };
 
     try {
       const lexer = new Lexer(code);
@@ -58,9 +65,10 @@ print(add(x, y))`);
       const ast = parser.parse();
 
       const interpreter = new Interpreter();
-      const result = interpreter.run(ast);
+      interpreter.run(ast);
 
-      setOutput(JSON.stringify(result, null, 2));
+      
+      setOutput(buffer || "(no output)");
       setIsError(false);
     } catch (err: any) {
       setOutput(err.message ?? String(err));
@@ -98,9 +106,9 @@ print(add(x, y))`);
         {isOutputCollapsed && (
           <button
             onClick={toggleOutputCollapse}
-            className="w-12 border-l border-[var(--color-border)] bg-[var(--color-elevated)]
-                       hover:bg-[var(--color-card-bg)] transition-colors flex items-center justify-center
-                       text-[var(--color-text-secondary)] hover:text-[var(--color-brand-cyan)]"
+            className="w-12 border-l border-(--color-border) bg-(--color-elevated)
+                       hover:bg-(--color-card-bg) transition-colors flex items-center justify-center
+                       text-(--color-text-secondary) hover:text-(--color-brand-cyan)"
             title="Expand output"
           >
             <ChevronLeft className="w-5 h-5" />

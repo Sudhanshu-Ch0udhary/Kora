@@ -1,22 +1,15 @@
-import { useState } from "react";
-import { Lexer, Parser, Interpreter, stdlib } from "@sudhanshu_choudhary/kora-core";
-import { ChevronLeft } from "lucide-react";
-import Header from "./components/Header";
-import CodeEditor from "./components/CodeEditor";
-import OutputPanel from "./components/OutputPanel";
-import LoadingSpinner from "./components/LoadingSpinner";
-import ResizableDivider from "./components/ResizableDivider";
+import { useState } from "react"
+import { Lexer, Parser, Interpreter, stdlib } from "@sudhanshu_choudhary/kora-core"
+import { ChevronLeft } from "lucide-react"
+import Header from "./components/Header"
+import CodeEditor from "./components/CodeEditor"
+import OutputPanel from "./components/OutputPanel"
+import LoadingSpinner from "./components/LoadingSpinner"
+import ResizableDivider from "./components/ResizableDivider"
+import { sampleCode } from "./util/samplecode"
 
 export default function App() {
-  const [code, setCode] = useState(`int x = 10
-int y = 5
-
-func add(int a, int b) {
-  return a + b
-}
-
-print(add(x, y))`);
-
+  const [code, setCode] = useState(sampleCode);
   const [output, setOutput] = useState("");
   const [isError, setIsError] = useState(false);
   const [isRunning, setIsRunning] = useState(false);

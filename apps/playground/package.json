@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.20.0",
+    "@codemirror/commands": "^6.10.2",
+    "@codemirror/highlight": "^0.19.8",
+    "@codemirror/state": "^6.5.4",
+    "@codemirror/view": "^6.39.13",
     "@sudhanshu_choudhary/kora-core": "^0.1.1",
     "@tailwindcss/vite": "^4.1.18",
     "lucide-react": "^0.563.0",

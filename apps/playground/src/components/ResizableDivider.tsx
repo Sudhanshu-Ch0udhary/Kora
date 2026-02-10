@@ -41,13 +41,13 @@ export default function ResizableDivider({ onResize }: ResizableDividerProps) {
   return (
     <div
       onMouseDown={handleMouseDown}
-      className={`w-1 bg-[var(--color-border)] hover:bg-[var(--color-brand-cyan)] 
+      className={`w-1 bg-(--color-border) hover:bg-(--color-brand-cyan) 
                   transition-colors cursor-col-resize flex items-center justify-center
-                  relative group ${isDragging ? 'bg-[var(--color-brand-cyan)]' : ''}`}
+                  relative group ${isDragging ? 'bg-(--color-brand-cyan)' : ''}`}
     >
       <div className="absolute inset-y-0 -left-1 -right-1" />
-      <div className="absolute top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] 
-                      group-hover:text-[var(--color-brand-cyan)] transition-colors">
+      <div className="absolute top-1/2 -translate-y-1/2 text-(--color-text-muted) 
+                      group-hover:text-(--color-brand-cyan) transition-colors">
         <GripVertical className="w-3 h-3" />
       </div>
     </div>

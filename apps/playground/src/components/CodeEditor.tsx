@@ -3,6 +3,7 @@ import { EditorView, keymap } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { closeBrackets } from "@codemirror/autocomplete";
+import { koraLanguage } from '../editor/koraLanguage';
 
 interface CodeEditorProps {
   value: string;
@@ -25,6 +26,7 @@ export default function CodeEditor({ value, onChange }: CodeEditorProps) {
           ...defaultKeymap,
           ...historyKeymap
         ]),
+        koraLanguage,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
             onChange(update.state.doc.toString());

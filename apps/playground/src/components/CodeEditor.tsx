@@ -5,6 +5,8 @@ import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { closeBrackets } from "@codemirror/autocomplete";
 import { koraLanguage } from '../editor/koraLanguage';
 import { koraTheme } from "../editor/koraTheme";
+import { syntaxHighlighting } from "@codemirror/language";
+import { koraHighlight } from "../editor/koraHighlight";
 
 interface CodeEditorProps {
   value: string;
@@ -28,6 +30,7 @@ export default function CodeEditor({ value, onChange }: CodeEditorProps) {
           ...historyKeymap
         ]),
         koraLanguage,
+        syntaxHighlighting(koraHighlight),
         koraTheme,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {

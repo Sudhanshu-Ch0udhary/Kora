@@ -7,6 +7,7 @@ import { koraLanguage } from '../editor/koraLanguage';
 import { koraTheme } from "../editor/koraTheme";
 import { syntaxHighlighting } from "@codemirror/language";
 import { koraHighlight } from "../editor/koraHighlight";
+import { koraDiagnostics } from "../editor/koraDiagnostics";
 
 interface CodeEditorProps {
   value: string;
@@ -32,6 +33,7 @@ export default function CodeEditor({ value, onChange }: CodeEditorProps) {
         koraLanguage,
         syntaxHighlighting(koraHighlight),
         koraTheme,
+        koraDiagnostics,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
             onChange(update.state.doc.toString());

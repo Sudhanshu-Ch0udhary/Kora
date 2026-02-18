@@ -20,18 +20,32 @@ import { FunctionDeclaration,ReturnStatement } from "../ast/statements.js";
 export class Parser {
   private tokens: Token[];
   private current = 0;
+  public errors: ParseError[] = [];
 
   constructor(tokens: Token[]) {
     this.tokens = tokens;
   }
 
   parse(): Statement[] {
-    const statements: Statement[] = [];
-    while (!this.isAtEnd()) {
+  const statements: Statement[] = [];
+
+  while (!this.isAtEnd()) {
+    try {
       statements.push(this.statement());
+    } catch (err) {
+      if (err instanceof ParseError) {
+        this.errors.push(err);
+        this.synchronize();
+      } else {
+        throw err;
+      }
     }
-    return statements;
   }
+
+  return statements;
+}
+
+
   private parseExpression(): Expression {
     return this.assignment();
   }
@@ -279,7 +293,7 @@ export class Parser {
       return expr;
     }
 
-    throw new ParseError("Expected expression", this.peek());
+    throw new ParseError("Expected expression", this.previous());
   }
 
   private ifStatement(): Statement {
@@ -304,7 +318,16 @@ export class Parser {
     const statements: Statement[] = [];
 
     while (!this.check(TokenType.RIGHT_BRACE) && !this.isAtEnd()) {
-      statements.push(this.statement());
+      try {
+        statements.push(this.statement());
+      } catch (err) {
+        if (err instanceof ParseError) {
+          this.errors.push(err);
+          this.synchronize();
+        } else {
+          throw err;
+        }
+      }
     }
 
     this.consume(TokenType.RIGHT_BRACE, "Expected '}' after block");
@@ -465,8 +488,6 @@ export class Parser {
   return expr;
 }
 
-
-
   private match(...types: TokenType[]): boolean {
     for (const type of types) {
       if (this.check(type)) {
@@ -503,4 +524,28 @@ export class Parser {
   private previous(): Token {
     return this.tokens[this.current - 1];
   }
+
+  private synchronize(): void {
+    this.advance();
+
+    while (!this.isAtEnd()) {
+
+      switch (this.peek().type) {
+        case TokenType.FUNC:
+        case TokenType.INT:
+        case TokenType.FLOAT:
+        case TokenType.STRING:
+        case TokenType.BOOL:
+        case TokenType.IF:
+        case TokenType.WHILE:
+        case TokenType.RETURN:
+        case TokenType.STOP:
+        case TokenType.IDENTIFIER:
+          return;
+      }
+      this.advance();
+    }
+  }
+
+
 }

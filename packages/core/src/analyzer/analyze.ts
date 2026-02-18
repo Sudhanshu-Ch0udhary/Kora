@@ -9,30 +9,18 @@ export interface KoraDiagnostic {
 }
 
 export function analyze(source: string): KoraDiagnostic[] {
-  const diagnostics: KoraDiagnostic[] = [];
+  const lexer = new Lexer(source);
+  const tokens = lexer.scanTokens();
 
-  try {
-    const lexer = new Lexer(source);
-    const tokens = lexer.scanTokens();
+  const parser = new Parser(tokens);
+  parser.parse();
 
-    const parser = new Parser(tokens);
-    const program = parser.parse();
-
-  } catch (err) {
-    if (err instanceof ParseError) {
-      const match = err.message.match(/Line (\d+), Column (\d+): (.*)/);
-
-      if (match) {
-        diagnostics.push({
-          line: Number(match[1]),
-          column: Number(match[2]),
-          message: match[3]
-        });
-      }
-    } else {
-      console.error(err);
-    }
-  }
-
-  return diagnostics;
+  return parser.errors.map(err => {
+    const match = err.message.match(/Line (\d+), Column (\d+): (.*)/)!;
+    return {
+      line: Number(match[1]),
+      column: Number(match[2]),
+      message: match[3]
+    };
+  });
 }

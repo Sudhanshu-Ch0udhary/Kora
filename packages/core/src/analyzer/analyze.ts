@@ -1,6 +1,5 @@
 import { Lexer } from "../lexer/index.js"
 import { Parser } from "../parser/parser.js"
-import { ParseError } from "../parser/parseError.js"
 
 export interface KoraDiagnostic {
   message: string;
